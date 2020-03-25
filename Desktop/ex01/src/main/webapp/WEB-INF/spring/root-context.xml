@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+			<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		 <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		 <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		 <property name="username" value="hr"></property>
+		  <property name="password" value="1234"></property>
+		 </bean>
+		 
+		 
+		 <!-- HikaraiCP configuration -->
+	
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+	<constructor-arg ref="hikariConfig"/>
+	
+	</bean>	
+		 <bean id="sqlSessionFactory"
+class="org.mybatis.spring.SqlSessionFactoryBean">
+<property name="dataSource" ref="dataSource"></property>
+
+</bean>
+		 
+		 <mybatis-spring:scan base-package="org.zerock.mapper" />
+		 <context:component-scan base-package="org.zerock" >
+		 <context:exclude-filter type="annotation" expression="org.zerock.web"/>
+		 </context:component-scan>
+		 
+		
+<!-- <property name="mapperLocations"
+value="classpath:org/zerock/mapper/TestMapper.xml"></property>
+ -->  <!-- ex000을 복사해서 그대로 쓴건데 spring은 xml에 적혀있는 모든것을 찾기 때문에 현재프로젝트에서는 Mapper가 없으므로 주석처리해줘야한다. -->
+
+
+		 
+		
+		
+<!--  <context:component-scan base-package="org.zerock.sample"/>--> <!--패키지에서 오류가 나서 테스트 할때 오류가 가기때문에 오류가 안나도록 해줘야함. -->
+
+	
+</beans>
