@@ -7,9 +7,7 @@
 opensource|version
 ---|---|
 
-java| 1.8
-spring| 
-maven|
-jquery|
+java| 1.8|
+
 
 
